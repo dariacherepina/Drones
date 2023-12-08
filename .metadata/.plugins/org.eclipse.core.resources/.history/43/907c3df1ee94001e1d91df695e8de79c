@@ -1,0 +1,27 @@
+package drones.groupe_12.fra.uas;
+
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class main {
+
+	public static void main(String[] args){
+		final String TOKEN = "Token 1586b43740b3c8b3686b31e2dc1cf1b4273b838f";
+		 URL url;
+		try {
+			url = new URL("https://dronesim.facets-labs.com/api/?format=json");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 HttpURLConnection con ;
+		 con = ( HttpURLConnection )url.openConnection() ;
+		 con.setRequestProperty("Authorization ", TOKEN ) ;
+		 con.setRequestMethod("GET") ;
+		 con.setRequestProperty("User - Agent ", " XYZ ") ;
+		 int responseCode = con.getResponseCode () ;
+
+	}
+
+}
