@@ -26,7 +26,6 @@ public class main {
 		}
 		catch(Exception ex){
 			ex.getMessage();}
-		System.out.println("Test");
 	}
 	
 		
