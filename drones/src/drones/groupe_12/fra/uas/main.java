@@ -22,7 +22,7 @@ public class main {
 		 int responseCode = con.getResponseCode() ;
 		 System.out.println("response code " + responseCode);
 		 JSONArray d;
-		 
+		 System.out.println("Alina hat es endlich geschafft!");		 
 		}
 		catch(Exception ex){
 			ex.getMessage();}
