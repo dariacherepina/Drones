@@ -23,25 +23,26 @@ public class main {
 		 //int responseCode = con.getResponseCode() ;
 		 //System.out.println("response code " + responseCode);
 		// Get the response
-		 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		 String inputLine;
-		 StringBuffer content = new StringBuffer();
-		 while ((inputLine = in.readLine()) != null) {
-		    content.append(inputLine);
-		 }
-		 in.close();
+	    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	    String inputLine;
+	    StringBuffer content = new StringBuffer();
+	    while ((inputLine = in.readLine()) != null) {
+	        content.append(inputLine);
+	    }
+	    in.close();
+	    con.disconnect();
 	
 	    // Parse the JSON response
-	   // ObjectMapper mapper = new ObjectMapper();
-	   // YourDataClass data = mapper.readValue(content.toString(), YourDataClass.class);
+	    ObjectMapper mapper = new ObjectMapper();
+	    YourDataClass data = mapper.readValue(content.toString(), YourDataClass.class);
 	
 	    // Now you can use the data...
-	   // System.out.println("Data: " + data);
+	    System.out.println("Data: " + data);
 		 
 		}
 		catch(Exception ex){
 			ex.getMessage();}
-		//System.out.println("Das ist Daria!");
+		System.out.println("Das ist Daria!");
 	
 	
 		}
@@ -49,3 +50,4 @@ public class main {
 	
 		
 
+}

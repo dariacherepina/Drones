@@ -23,7 +23,7 @@ public class main {
 		 //int responseCode = con.getResponseCode() ;
 		 //System.out.println("response code " + responseCode);
 		// Get the response
-		 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		 String inputLine;
 		 StringBuffer content = new StringBuffer();
 		 while ((inputLine = in.readLine()) != null) {
@@ -41,7 +41,7 @@ public class main {
 		}
 		catch(Exception ex){
 			ex.getMessage();}
-		//System.out.println("Das ist Daria!");
+		System.out.println("Das ist Daria!");
 	
 	
 		}
@@ -49,3 +49,4 @@ public class main {
 	
 		
 
+}
