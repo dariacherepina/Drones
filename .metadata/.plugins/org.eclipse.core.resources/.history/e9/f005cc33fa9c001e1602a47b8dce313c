@@ -1,0 +1,36 @@
+package drones.groupe_12.fra.uas;
+import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
+import java.net.URL;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+//import java.net.MalformedURLException;
+
+import org.json.JSONArray;
+
+public class main {
+
+	public static void main(String[] args){
+		APIConnection apiClient = new APIConnection();
+		String dronesResponse;
+		String droneTypesResponse;
+		String droneDynamicsResponse;
+		try {
+			dronesResponse = apiClient.getResponse("drones/?format=json");
+			System.out.println("Drones: " + dronesResponse);
+			droneTypesResponse = apiClient.getResponse("dronedynamics/?format=json");
+			System.out.println("Drone Types: " + droneTypesResponse);
+			droneDynamicsResponse = apiClient.getResponse("dronedynamics/?format=json");
+			System.out.println("Drone Types: " + droneTypesResponse);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		
+        
+	}
+}
+	
+		

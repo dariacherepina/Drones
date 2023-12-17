@@ -1,0 +1,19 @@
+package drones.groupe_12.fra.uas;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+//import java.net.MalformedURLException;
+
+import org.json.JSONArray;
+
+public class main {
+
+	public static void main(String[] args){
+		APIConnection apiClient = new APIConnection();
+		String droneTypesResponse = apiClient.getResponse("dronetypes/?format=json\\");
+        System.out.println("Drone Types: " + droneTypesResponse);
+	}
+}
+	
+		
