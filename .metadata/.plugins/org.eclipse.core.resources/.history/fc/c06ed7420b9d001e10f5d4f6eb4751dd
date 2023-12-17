@@ -1,0 +1,23 @@
+package drones.groupe_12.fra.uas;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+
+public class IndividualDrone extends APIConnection {
+    private static final String USER_AGENT = "Mozilla Firefox Awesome version";
+    private static final String TOKEN = "Token 1586b43740b3c8b3686b31e2dc1cf1b4273b838f";
+    private static final String START_URL = "https://dronesim.facets-labs.com/api/";
+    
+    IndividualDrone(){}
+    
+    
+	public String getDroneData(int droneId) {
+		   return getResponse("dronetypes/" + droneId + "/?format=json");
+		}
+
+}

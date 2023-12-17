@@ -13,91 +13,91 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class APIConnection {
-    // Define constants
-    private static final String USER_AGENT = "Mozilla Firefox Awesome version";
-    private static final String START_URL = "https://dronesim.facets-labs.com/api/";
-    private static final String TOKEN = "Token 1586b43740b3c8b3686b31e2dc1cf1b4273b838f";
+	private static final String USER_AGENT = "Mozilla Firefox Awesome version";
+	private static final String START_URL = "https://dronesim.facets-labs.com/api/";
+	private static final String TOKEN = "Token 1586b43740b3c8b3686b31e2dc1cf1b4273b838f";
 
-    // Adjusted the variable to be non-static
-    private HttpURLConnection connection;
+	// Adjusted the variable to be non-static
+	private HttpURLConnection connection;
 
-    public APIConnection() {
-    }
+	public APIConnection() {
+	}
 
-    public String getResponse(String type_of_data) {
-        String nextPageUrl = START_URL + type_of_data;
-        BufferedReader reader;
-        String line;
-        StringBuilder responseContent = new StringBuilder();
-        int retries = 3;
+	public String getResponse(String endpoint) {
+		String nextPageUrl = "http://dronesim.facets-labs.com/api/" + endpoint;
 
-        // Method 1: java.net.HttpURLConnection (getting response from remote server)
-        while (nextPageUrl != null) {
-            try {
-                // Define our URL
-                URL url = new URL(nextPageUrl);
+		BufferedReader reader;
+		String line;
+		StringBuilder responseContent = new StringBuilder();
+		int retries = 3;
 
-                // Opening connection
-                connection = (HttpURLConnection) url.openConnection();
+		// Method 1: java.net.HttpURLConnection (getting response from remote server)
+		while (nextPageUrl != null) {
+			try {
+				// Define our URL
+				URL url = new URL(nextPageUrl);
 
-                // Request setup with a GET Method (fundamental part of the HTTP request)
-                connection.setRequestMethod("GET");
+				// Opening connection
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                // Set request properties (additional details to the request)
-                connection.setRequestProperty("Authorization", TOKEN);
-                connection.setRequestProperty("User-Agent", USER_AGENT);
+				// Request setup with a GET Method (fundamental part of the HTTP request)
+				connection.setRequestMethod("GET");
 
-                // Connection timeout in milliseconds (not necessary)
-                connection.setConnectTimeout(1000000);
-                connection.setReadTimeout(1000000);
+				// Set request properties (additional details to the request)
+				connection.setRequestProperty("Authorization", TOKEN);
+				connection.setRequestProperty("User-Agent", USER_AGENT);
 
-                // Getting Response code from URL
-                int status = connection.getResponseCode();
-                System.out.println("Response code " + status);
+				// Connection timeout in milliseconds (not necessary)
+				connection.setConnectTimeout(1000000);
+				connection.setReadTimeout(1000000);
 
-                // Response from the endpoint
-                // Handle both unsuccessful and successful responses
-                reader = new BufferedReader(new InputStreamReader(
-                        status > 299 ? connection.getErrorStream() : connection.getInputStream()));
+				// Getting Response code from URL
+				int status = connection.getResponseCode();
+				System.out.println("Response code " + status);
 
-                while ((line = reader.readLine()) != null) {
-                    responseContent.append(line);
-                }
-                reader.close();
+				// Response from the endpoint
+				// Handle both unsuccessful and successful responses
+				reader = new BufferedReader(new InputStreamReader(
+						status > 299 ? connection.getErrorStream() : connection.getInputStream()));
 
-                String nextPageLink = connection.getHeaderField("Link");
-                if (nextPageLink != null && !nextPageLink.equals("null")) {
-                    nextPageUrl = nextPageLink;
-                } else {
-                    nextPageUrl = null;
-                }
+				while ((line = reader.readLine()) != null) {
+					responseContent.append(line);
+				}
+				reader.close();
 
-            } catch (SocketTimeoutException e) {
-                if (retries > 0) {
-                    System.out.println("Socket timeout occurred. Retrying...");
-                    retries--;
-                } else {
-                    System.out.println("Socket timeout occurred. Max retries reached. Giving up...");
-                    e.printStackTrace();
-                    break;
-                }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-            }
-        }
+				String nextPageLink = connection.getHeaderField("Link");
+				if (nextPageLink != null && !nextPageLink.equals("null")) {
+					nextPageUrl = nextPageLink;
+				} else {
+					nextPageUrl = null;
+				}
 
-        return responseContent.toString();
-    }
-    
-    // von Beispiel 
-    
-    public static void test(String input) {
+			} catch (SocketTimeoutException e) {
+				if (retries > 0) {
+					System.out.println("Socket timeout occurred. Retrying...");
+					retries--;
+				} else {
+					System.out.println("Socket timeout occurred. Max retries reached. Giving up...");
+					e.printStackTrace();
+					break;
+				}
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (connection != null) {
+					connection.disconnect();
+				}
+			}
+		}
+
+		return responseContent.toString();
+	}
+
+	// von Beispiel 
+
+	public static void test(String input) {
 		// Create a JSONObject from the input
 		JSONObject wholeFile = new JSONObject(input);
 		// Get the JSONArray from the JSONObject
@@ -116,7 +116,7 @@ public class APIConnection {
 				System.out.println("Drone " + id + ": carriage type " + a + " (weight: " + b + "g)");
 			}
 		}
-		
+
 	}
 
 	// Method to format JSON
@@ -129,7 +129,7 @@ public class APIConnection {
 		// Check if the JSON is a JSONObject or a JSONArray
 		if (json instanceof JSONObject) {
 			JSONObject o = (JSONObject) json;
-			
+
 			// Return the JSONObject as a string with indentation
 			return o.toString(indentSpaces);
 		} else if (json instanceof JSONArray) {

@@ -1,0 +1,16 @@
+package drones.groupe_12.fra.uas;
+
+
+public class IndividualDrone extends APIConnection {
+
+	IndividualDrone(){}
+
+
+	public String getDroneIndivData(int droneId) {
+		return getResponse("dronetypes/" + droneId + "/?format=json");
+	}
+	public String getDroneIndivData() {
+		return getResponse("drones/?format=json&limit=20&offset=0\");
+	}
+
+}

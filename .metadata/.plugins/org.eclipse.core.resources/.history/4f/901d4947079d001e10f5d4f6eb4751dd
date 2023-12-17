@@ -1,0 +1,53 @@
+package drones.groupe_12.fra.uas;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+
+public class IndividualDrone {
+    private static final String USER_AGENT = "Mozilla Firefox Awesome version";
+    private static final String TOKEN = "Token 1586b43740b3c8b3686b31e2dc1cf1b4273b838f";
+	public String getDroneData(String droneId) {
+		   String urlString = "http://dronesim.facets-labs.com/api/dronedynamics/" + droneId + "/";
+		   URL url;
+		   HttpURLConnection connection = null;
+		   BufferedReader reader;
+		   String line;
+		   StringBuffer responseContent = new StringBuffer();
+
+		   try {
+		       url = new URL(urlString);
+		       connection = (HttpURLConnection) url.openConnection();
+		       connection.setRequestMethod("GET");
+		       connection.setRequestProperty("Authorization", TOKEN);
+		       connection.setRequestProperty("User-Agent", USER_AGENT);
+
+		       int status = connection.getResponseCode();
+		       if (status > 299) {
+		           reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+		       } else {
+		           reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		       }
+
+		       while ((line = reader.readLine()) != null) {
+		           responseContent.append(line);
+		       }
+		       reader.close();
+		   } catch (MalformedURLException e) {
+		       e.printStackTrace();
+		   } catch (IOException e) {
+		       e.printStackTrace();
+		   } finally {
+		       if (connection != null) {
+		           connection.disconnect();
+		       }
+		   }
+
+		   return responseContent.toString();
+		}
+
+}
