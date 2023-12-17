@@ -1,5 +1,0 @@
-INDEX VERSION 1.134+/home/diara/Desktop/workspace_java_project_uas/.metadata/.plugins/org.eclipse.jdt.core
-1147459315.index
-1865797976.index
-3939171498.index
-1591894096.index
