@@ -1,0 +1,71 @@
+package drones.groupe_12.fra.uas;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class DroneApiClient {
+
+	private static final String API_BASE_URL = "http://dronesim.facets-labs.com/api/";
+    private static final String TOKEN = "Token 1586b43740b3c8b3686b31e2dc1cf1b4273b838f";
+    private static final String USER_AGENT = "XYZ";
+
+    public String fetchDataFromApi(String endpoint) {
+        try {
+            URL url = new URL(API_BASE_URL + endpoint);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("Authorization", TOKEN);
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", USER_AGENT);
+
+            int responseCode = connection.getResponseCode();
+
+            System.out.println("Response Code " + responseCode);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            in.close();
+            System.out.println(response.toString()); // Process your response
+            processApiResponse(response.toString());
+
+            return response.toString(); // Gibt die API Antwort als Text zurück
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void processApiResponse(String input) {
+        JSONObject wholeFile = new JSONObject(input);
+        JSONArray jsonFile = wholeFile.getJSONArray("results");
+
+        for (int i = 0; i < jsonFile.length(); i++) {
+            JSONObject droneObject = jsonFile.getJSONObject(i);
+            if (droneObject.has("carriage_type") && droneObject.has("carriage_weight")) {
+                String carriageType = droneObject.getString("carriage_type");
+                int carriageWeight = droneObject.getInt("carriage_weight");
+                int droneId = droneObject.getInt("id");
+
+                System.out.println("Drone " + droneId + ": carriage type " + carriageType + " (weight: " + carriageWeight + "g)");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Test started...");
+
+        DroneApiClient apiClient = new DroneApiClient();
+        apiClient.fetchDataFromApi("drones/?format=json");
+    }
+}
