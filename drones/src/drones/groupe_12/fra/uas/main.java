@@ -12,6 +12,7 @@ public class main {
 	public static void main(String[] args){//ignore
 
 		try {
+			System.out.println("Test from Intelij");
 		final String TOKEN = "Token 1586b43740b3c8b3686b31e2dc1cf1b4273b838f";
 		 URL url;
 		 url = new URL("http://dronesim.facets-labs.com/api/?format=json");
