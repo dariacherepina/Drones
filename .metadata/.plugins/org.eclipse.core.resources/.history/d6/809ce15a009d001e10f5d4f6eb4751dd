@@ -25,7 +25,6 @@ public class main {
 		droneDynamicsResponse = apiClient.getResponse("dronedynamics/?format=json&limit=20&offset=0");
 		System.out.println("Drone Types: " + droneDynamicsResponse);
 		apiClient.test(dronesResponse.toString());
-		//apiClient.formatJson(dronesResponse.toString());
 		
         
 	}

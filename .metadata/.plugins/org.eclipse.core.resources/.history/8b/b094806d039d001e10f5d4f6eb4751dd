@@ -95,8 +95,6 @@ public class APIConnection {
         return responseContent.toString();
     }
     
-    // von Beispiel 
-    
     public static void test(String input) {
 		// Create a JSONObject from the input
 		JSONObject wholeFile = new JSONObject(input);
